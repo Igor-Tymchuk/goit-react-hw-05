@@ -1,15 +1,20 @@
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
 body {
-  min-width: 360px;
-  max-width: max-content;
+  min-width: 340px;
+  max-width: 1630px;
+  min-height: 95vh;
+  padding: 0 20px;
   margin: 0 auto;
   font-family: "Play", sans-serif;
-  background: linear-gradient(to bottom, #9bfa92, #e2e2e2);
+  background-color: #f9fafb;
+  background-image: linear-gradient(#e5e7eb 1px, #0000 0),
+    linear-gradient(90deg, #e5e7eb 1px, #0000 0);
+  background-size: 70px 70px;
   font-style: normal;
 }
 
@@ -48,4 +53,9 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

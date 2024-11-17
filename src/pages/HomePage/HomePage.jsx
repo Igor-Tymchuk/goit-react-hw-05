@@ -26,6 +26,8 @@ const HomePage = () => {
   }, []);
   return (
     <>
+      {list && !error && <h2 className={s.title}>Top 20 Trending movies</h2>}
+      {!list && !error && <div className={s.empty}></div>}
       {list && !error && <MovieList list={list.results} />}
       {loader && <Loader />}
       {error && (

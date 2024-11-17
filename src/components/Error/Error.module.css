@@ -1,0 +1,13 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 82vh;
+  & p {
+    font-size: x-large;
+  }
+  & p:first-child {
+    font-weight: 700;
+  }
+}

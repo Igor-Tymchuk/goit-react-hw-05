@@ -3,6 +3,8 @@ import { creditsMovie } from "../../services/api";
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 import Error from "../Error/Error";
+import placeholder from "../../assets/placeholder.png";
+import s from "./MovieCast.module.css";
 
 const MovieCast = () => {
   const { movieId } = useParams();
@@ -34,14 +36,18 @@ const MovieCast = () => {
         />
       )}
       {casts && (
-        <ul>
+        <ul className={s.list}>
           {casts.cast.map((actor) => (
-            <li key={actor.id}>
+            <li key={actor.id} className={s.cast}>
               <img
-                src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+                src={
+                  actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                    : placeholder
+                }
                 alt={actor.name}
               />
-              <p>{actor.character}</p>
+              <p className={s.role}>&quot;{actor.character}&quot;</p>
               <p>{actor.name}</p>
             </li>
           ))}

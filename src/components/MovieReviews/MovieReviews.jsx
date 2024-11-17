@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { reviewsMovie } from "../../services/api";
 import Loader from "../Loader/Loader";
 import Error from "../Error/Error";
+import s from "./MovieReviews.module.css";
+import { MdPerson } from "react-icons/md";
 
 const MovieReview = () => {
   const { movieId } = useParams();
@@ -37,14 +39,18 @@ const MovieReview = () => {
         (reviews.results.length ? (
           <ul>
             {reviews.results.map((review) => (
-              <li key={review.id}>
-                <b>{review.author}</b>
+              <li key={review.id} className={s.review}>
+                <p>
+                  <MdPerson />
+                  &nbsp;
+                  {review.author}
+                </p>
                 <p>{review.content}</p>
               </li>
             ))}
           </ul>
         ) : (
-          <div>No reviews...</div>
+          <div className={s.review}>No reviews...</div>
         ))}
     </>
   );

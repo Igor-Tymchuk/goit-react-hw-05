@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import Error from "../../components/Error/Error";
 import Loader from "../../components/Loader/Loader";
 import Buttons from "../../components/Buttons/Buttons";
+import s from "./MoviePage.module.css";
 
 const MoviePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -55,16 +56,25 @@ const MoviePage = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="query" />
-        <button type="submit">Search</button>
-      </form>
-      {movieList && !error && (
-        <>
-          <MovieList list={movieList.results} query={searchParams} />
+      <div className={s.box}>
+        <form onSubmit={handleSubmit} className={s.form}>
+          <input type="text" name="query" className={s.input} />
+          <button type="submit" className={s.btn}>
+            Search
+          </button>
+        </form>
+        {movieList && !error && (
           <Buttons handlePage={handlePage} movieList={movieList} />
-        </>
-      )}
+        )}
+        {movieList && (
+          <p className={s.text}>
+            <span>{movieList.total_results}</span> results for `
+            <span>{searchParams.get("query")}</span>`
+          </p>
+        )}
+      </div>
+      {!movieList && !error && <div className={s.empty}></div>}
+      {movieList && !error && <MovieList list={movieList.results} />}
       {loader && <Loader />}
       {error && (
         <Error
