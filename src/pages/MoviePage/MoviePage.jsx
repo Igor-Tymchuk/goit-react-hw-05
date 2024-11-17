@@ -2,23 +2,32 @@ import { useEffect, useState } from "react";
 import MovieList from "../../components/MovieList/MovieList";
 import { searchMovie } from "../../services/api";
 import { useSearchParams } from "react-router-dom";
+import Error from "../../components/Error/Error";
+import Loader from "../../components/Loader/Loader";
+import Buttons from "../../components/Buttons/Buttons";
 
 const MoviePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [movieList, setMovieList] = useState(null);
+  const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newQuery = e.target.elements.query.value.toLowerCase().trim();
     if (!newQuery) return;
-    setSearchParams({
-      query: newQuery,
-      page: 1,
-    });
+    setSearchParams(
+      {
+        query: newQuery,
+        page: 1,
+      },
+      { replace: true }
+    );
     e.target.reset();
   };
 
   const handlePage = (pageNumber) => {
+    setMovieList(null);
     setSearchParams({
       query: searchParams.get("query"),
       page: pageNumber,
@@ -32,10 +41,14 @@ const MoviePage = () => {
     if (!currentQuery) return;
     (async () => {
       try {
+        setLoader(true);
+        setError(null);
         const filteredMovie = await searchMovie(currentQuery, currentPage);
         setMovieList(filteredMovie);
       } catch (error) {
-        console.log(error);
+        setError(error);
+      } finally {
+        setLoader(false);
       }
     })();
   }, [searchParams]);
@@ -46,29 +59,18 @@ const MoviePage = () => {
         <input type="text" name="query" />
         <button type="submit">Search</button>
       </form>
-      {movieList && <MovieList list={movieList.results} query={searchParams} />}
-      {movieList && (
-        <p>
-          Page: {movieList.page}/{movieList.total_pages}
-        </p>
-      )}
-      {movieList && (
+      {movieList && !error && (
         <>
-          <button
-            type="button"
-            disabled={movieList.page <= 1}
-            onClick={() => handlePage(movieList.page - 1)}
-          >
-            Prev
-          </button>
-          <button
-            type="button"
-            disabled={movieList.total_pages <= movieList.page}
-            onClick={() => handlePage(movieList.page + 1)}
-          >
-            Next
-          </button>
+          <MovieList list={movieList.results} query={searchParams} />
+          <Buttons handlePage={handlePage} movieList={movieList} />
         </>
+      )}
+      {loader && <Loader />}
+      {error && (
+        <Error
+          status={error.response?.status}
+          message={error.response?.data?.status_message}
+        />
       )}
     </>
   );

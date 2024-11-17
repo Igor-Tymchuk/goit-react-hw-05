@@ -1,38 +1,53 @@
 import { useParams } from "react-router-dom";
 import { creditsMovie } from "../../services/api";
 import { useEffect, useState } from "react";
+import Loader from "../Loader/Loader";
+import Error from "../Error/Error";
 
 const MovieCast = () => {
   const { movieId } = useParams();
   const [casts, setCasts] = useState(null);
+  const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
+        setLoader(true);
+        setError(null);
         const data = await creditsMovie(movieId);
         setCasts(data);
-        console.log(data);
       } catch (error) {
-        console.log(error);
+        setError(error);
+      } finally {
+        setLoader(false);
       }
     })();
   }, [movieId]);
   return (
-    casts && (
-      <div>
+    <>
+      {loader && <Loader />}
+      {error && (
+        <Error
+          status={error.response?.status}
+          message={error.response?.data?.status_message}
+        />
+      )}
+      {casts && (
         <ul>
           {casts.cast.map((actor) => (
             <li key={actor.id}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
-                alt=""
+                alt={actor.name}
               />
               <p>{actor.character}</p>
               <p>{actor.name}</p>
             </li>
           ))}
         </ul>
-      </div>
-    )
+      )}
+    </>
   );
 };
 
