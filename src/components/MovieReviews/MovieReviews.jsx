@@ -50,7 +50,7 @@ const MovieReview = () => {
             ))}
           </ul>
         ) : (
-          <div className={s.review}>No reviews...</div>
+          <div className={s.notFound}>No reviews...</div>
         ))}
     </>
   );

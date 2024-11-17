@@ -20,3 +20,15 @@
 ul {
   margin-bottom: 12px;
 }
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid rgb(133, 133, 133);
+  border-radius: 20px;
+  background-color: #f3f3f39d;
+  font-size: large;
+  margin-bottom: 12px;
+}
