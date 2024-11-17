@@ -9,7 +9,8 @@ const Footer = () => {
         &nbsp;Go Up
       </a>
       <p>
-        &quot;<span>MovieInfo</span>&quot; on React by <span>Tymchuk</span>{" "}
+        &quot;<span>MovieInfo</span>&quot; on React by <span>Tymchuk</span>
+        <br />
         &copy; 2024
       </p>
     </footer>

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
+  padding: 12px 0;
   flex-wrap: wrap;
   row-gap: 10px;
   column-gap: 30px;
@@ -21,7 +21,7 @@ span {
 }
 .input {
   font-family: inherit;
-  padding: 8px 16px;
+  padding: 8px;
   text-decoration: none;
   color: black;
   font-size: large;
